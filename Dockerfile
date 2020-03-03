@@ -29,4 +29,4 @@ WORKDIR /app
 COPY --from=build /cloudwatchlogs /app/cloudwatchlogs
 
 EXPOSE 5555
-CMD ["/app/cloudwatchlogs"]
+ENTRYPOINT ["/app/cloudwatchlogs"]
