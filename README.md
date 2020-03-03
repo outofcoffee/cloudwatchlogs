@@ -36,14 +36,17 @@ Usage:
   cloudwatchlogs [OPTIONS]
 
 Application Options:
-      --host=       Server host (default: 0.0.0.0)
-      --port=       Server port (default: 5555)
-      --auth-user=  User name for basic authentication
-      --auth-pass=  User password for basic authentication
-      --access-key= AWS access key
-      --secret-key= AWS secret key
-      --region=     AWS region
-      --profile=    AWS CLI profile
+      --host=         Server host (default: 0.0.0.0)
+      --port=         Server port (default: 5555)
+      --auth-user=    User name for basic authentication
+      --auth-pass=    User password for basic authentication
+      --access-key=   AWS access key
+      --secret-key=   AWS secret key
+      --region=       AWS region
+      --profile=      AWS CLI profile
+      --title=        Web page title
+      --show-groups=  Whether to show the list of log groups (default: true)
+      --show-streams= Whether to show the list of log streams (default: true)
 
 Help Options:
   -h, --help        Show this help message

@@ -70,7 +70,7 @@ func clientFromContext(c *gin.Context) *cloudwatchlogs.CloudWatchLogs {
 	return c.MustGet("cloudwatch").(*cloudwatchlogs.CloudWatchLogs)
 }
 
-func serveHome(c *gin.Context) {
+func serveHome(c *gin.Context, config *Config) {
 	client := clientFromContext(c)
 
 	// Fetch available log groups
@@ -81,7 +81,10 @@ func serveHome(c *gin.Context) {
 	}
 
 	c.HTML(200, "/static/index.html", gin.H{
-		"log_groups": output.LogGroups,
+		"title":           config.Title,
+		"show_log_group":  config.ShowGroups == "true",
+		"show_log_stream": config.ShowStreams == "true",
+		"log_groups":      output.LogGroups,
 	})
 }
 
@@ -159,7 +162,9 @@ func main() {
 		c.Set("cloudwatch", client)
 	})
 
-	router.GET("/", serveHome)
+	router.GET("/", func(c *gin.Context) {
+		serveHome(c, config)
+	})
 	router.GET("/static/:file", serveStaticAsset)
 	router.GET("/groups", serverGroupsList)
 	router.GET("/streams", serveStreamsList)

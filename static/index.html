@@ -6,22 +6,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="/static/ansi_up.js"></script>
     <script src="/static/app.js"></script>
+    <title>{{ .title }}</title>
   </head>
   <body>
     <div id="main">
       <div id="header">
-        <h1>Cloudwatch Logs</h1>
+        <h1>{{ .title }}</h1>
         <div class="filters">
           <form action="/logs" method="get" class="row no-gutters" id="form">
             <input type="hidden" name="next_token" id="next_token" value="" />
+            {{ if .show_log_group }}
             <select class="form-control" id="log_group" name="group">
               <option value="">Select Group</option>
               {{ range .log_groups }}
               <option value="{{ .LogGroupName }}">{{ .LogGroupName }}</option>
               {{ end }}
             </select>
+            {{ else }}
+            <input type="hidden" name="group" id="log_group" value="" />
+            {{ end }}
+            {{ if .show_log_stream }}
             <select class="form-control" id="log_stream" name="stream">
             </select>
+            {{ else }}
+            <input type="hidden" name="stream" id="log_stream" value="" />
+            {{ end }}
             <select class="form-control" id="start_time" name="start_time">
               <option value="5m">Last 5 minutes</option>
               <option value="10m">Last 10 minutes</option>
