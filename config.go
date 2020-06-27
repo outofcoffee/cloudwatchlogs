@@ -17,6 +17,7 @@ type Config struct {
 	SecretKey    string `long:"secret-key" description:"AWS secret key"`
 	Region       string `long:"region" description:"AWS region"`
 	Profile      string `long:"profile" description:"AWS CLI profile"`
+	EventFilter  string `long:"event-filter" description:"Log event filter (appended to any user provided input)"`
 	Title        string `long:"title" description:"Web page title"`
 	ShowGroups   string `long:"show-groups" default:"true" description:"Whether to show the list of log groups"`
 	ShowStreams  string `long:"show-streams" default:"true" description:"Whether to show the list of log streams"`

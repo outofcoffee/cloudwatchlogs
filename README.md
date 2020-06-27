@@ -44,6 +44,7 @@ Application Options:
       --secret-key=   AWS secret key
       --region=       AWS region
       --profile=      AWS CLI profile
+      --event-filter= Log event filter (appended to any user provided input)
       --title=        Web page title
       --show-groups=  Whether to show the list of log groups (default: true)
       --show-streams= Whether to show the list of log streams (default: true)

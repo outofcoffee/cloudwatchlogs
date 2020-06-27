@@ -47,7 +47,7 @@ func newCloudwatchClient(config *Config) (*cloudwatchlogs.CloudWatchLogs, error)
 	return cloudwatchlogs.New(sess), nil
 }
 
-func (r *logsRequest) cloudwatchInput() *cloudwatchlogs.FilterLogEventsInput {
+func (r *logsRequest) cloudwatchInput(config *Config) *cloudwatchlogs.FilterLogEventsInput {
 	input := &cloudwatchlogs.FilterLogEventsInput{
 		LogGroupName: aws.String(r.Group),
 	}
@@ -60,8 +60,9 @@ func (r *logsRequest) cloudwatchInput() *cloudwatchlogs.FilterLogEventsInput {
 		input.SetLogStreamNames(names)
 	}
 
-	if r.Filter != "" {
-		input.SetFilterPattern(r.Filter)
+	filter := strings.TrimSpace(strings.Join([]string{r.Filter, config.EventFilter}, " "))
+	if filter != "" {
+		input.SetFilterPattern(filter)
 	}
 
 	if r.NextToken != "" {

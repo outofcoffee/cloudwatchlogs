@@ -15,7 +15,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 )
 
-func serveLogStream(c *gin.Context) {
+func serveLogStream(c *gin.Context, config *Config) {
 	client := clientFromContext(c)
 
 	req, err := logsRequestFromContext(c)
@@ -24,7 +24,7 @@ func serveLogStream(c *gin.Context) {
 		return
 	}
 
-	output, err := client.FilterLogEvents(req.cloudwatchInput())
+	output, err := client.FilterLogEvents(req.cloudwatchInput(config))
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -168,7 +168,9 @@ func main() {
 	router.GET("/static/:file", serveStaticAsset)
 	router.GET("/groups", serverGroupsList)
 	router.GET("/streams", serveStreamsList)
-	router.POST("/logs", serveLogStream)
+	router.POST("/logs", func(c *gin.Context) {
+		serveLogStream(c, config)
+	})
 
 	go func() {
 		exec.Command("open", "http://"+config.ListenAddr()).Run()
